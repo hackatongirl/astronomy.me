@@ -1,94 +1,109 @@
-// Ожидаем, пока документ полностью загрузится
-document.addEventListener('DOMContentLoaded', function() {
-  // ----------- 1. Переключение видимости карточки при клике (анимированное вращение) -----------
-  const flashcards = document.querySelectorAll('.flashcard');
+/* Общие стили */
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #f7f7f7;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background: linear-gradient(to top left, #ffe4e1, #ffd700);
+}
 
-  flashcards.forEach(card => {
-    card.addEventListener('click', function() {
-      const back = card.querySelector('.back');
-      if (back.style.display === 'flex') {
-        back.style.display = 'none';
-      } else {
-        back.style.display = 'flex';
-      }
-      card.classList.toggle('flip'); // Добавление/удаление анимации
-    });
-  });
+h1 {
+  color: #6a4e1f;
+  font-size: 2.5rem;
+  margin-bottom: 2rem;
+}
 
-  // ----------- 2. Функция поиска карточек -----------
-  document.getElementById('search').addEventListener('input', function(event) {
-    const query = event.target.value.toLowerCase();
-    flashcards.forEach(card => {
-      const text = card.textContent.toLowerCase();
-      if (text.includes(query)) {
-        card.style.display = 'block';
-      } else {
-        card.style.display = 'none';
-      }
-    });
-  });
+/* Контейнер для карточек */
+#flashcards-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 20px;
+  padding: 20px;
+}
 
-  // ----------- 3. Кнопки для навигации по карточкам (предыдущая/следующая) -----------
-  let currentIndex = 0;
+/* Стиль карточки */
+.flashcard {
+  position: relative;
+  perspective: 1000px;
+}
 
-  document.getElementById('next-btn').addEventListener('click', function() {
-    if (currentIndex < flashcards.length - 1) {
-      currentIndex++;
-      updateCardVisibility();
-    }
-  });
+.card {
+  width: 100%;
+  height: 300px;
+  background-color: #fff;
+  border-radius: 15px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  transform-style: preserve-3d;
+  transition: transform 0.6s;
+  cursor: pointer;
+}
 
-  document.getElementById('prev-btn').addEventListener('click', function() {
-    if (currentIndex > 0) {
-      currentIndex--;
-      updateCardVisibility();
-    }
-  });
+.card:hover {
+  transform: rotateY(180deg);
+}
 
-  function updateCardVisibility() {
-    flashcards.forEach((card, index) => {
-      card.style.display = index === currentIndex ? 'block' : 'none';
-    });
+/* Лицевая сторона */
+.front {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: #ffeb3b;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 15px;
+  font-size: 1.2rem;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+/* Задняя сторона */
+.back {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: #4caf50;
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  padding: 20px;
+  border-radius: 15px;
+  backface-visibility: hidden;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+.like-button {
+  margin-top: 20px;
+  background-color: #ffffff;
+  color: #4caf50;
+  padding: 5px 15px;
+  border-radius: 25px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.like-button:hover {
+  background-color: #f1f1f1;
+}
+
+.like-count {
+  font-size: 1.5rem;
+}
+
+/* Анимация переворота карточки */
+@keyframes flip {
+  from {
+    transform: rotateY(0);
   }
-
-  updateCardVisibility(); // Инициализация отображения первой карточки
-
-  // ----------- 4. Лайки для каждой карточки -----------
-  document.querySelectorAll('.like-btn').forEach((button, index) => {
-    button.addEventListener('click', function() {
-      const likeCount = button.nextElementSibling;
-      likeCount.textContent = parseInt(likeCount.textContent) + 1;
-    });
-  });
-
-  // ----------- 5. Темная тема -----------
-  const themeToggleButton = document.getElementById('theme-toggle');
-  themeToggleButton.addEventListener('click', function() {
-    document.body.classList.toggle('dark-theme');
-  });
-
-  // ----------- 6. Динамическое добавление карточек через JavaScript -----------
-  const flashcardsData = [
-    { question: "Кто был первым президентом США?", answer: "Джордж Вашингтон, первый президент США, с 1789 по 1797 годы." },
-    { question: "Когда началась Вторая мировая война?", answer: "Вторая мировая война началась 1 сентября 1939 года." },
-    { question: "Кто открыл Америку?", answer: "Кристофер Колумб открыл Америку в 1492 году." },
-    { question: "Когда был основан Рим?", answer: "Рим был основан в 753 году до нашей эры." },
-    { question: "Когда началась Великолепная французская революция?", answer: "Французская революция началась в 1789 году." }
-  ];
-
-  const container = document.getElementById('flashcards-container');
-  flashcardsData.forEach(item => {
-    const card = document.createElement('div');
-    card.classList.add('flashcard');
-    card.innerHTML = `
-      <div class="front">
-        <p>${item.question}</p>
-      </div>
-      <div class="back">
-        <p>${item.answer}</p>
-      </div>
-    `;
-    container.appendChild(card);
-  });
-
-});
+  to {
+    transform: rotateY(180deg);
+  }
+}
