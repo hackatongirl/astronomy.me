@@ -3,214 +3,155 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>History.fy — Мемы из истории</title>
-  <style>
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      margin: 0;
-      padding: 0;
-      background-color: #f8f8f8;
-      color: #333;
-      transition: background-color 0.3s, color 0.3s;
-    }
-    .dark-theme {
-      background-color: #1e1e1e;
-      color: #f0f0f0;
-    }
-    header {
-      padding: 20px;
-      background: #444;
-      color: #fff;
-      text-align: center;
-    }
-    .container {
-      max-width: 900px;
-      margin: 20px auto;
-      padding: 10px;
-    }
-    .meme-gallery {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-      gap: 15px;
-      padding: 20px;
-      opacity: 0;
-      transition: opacity 0.5s ease-in;
-    }
-    .meme-card {
-      background: #fff;
-      padding: 15px;
-      border-radius: 10px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-      text-align: center;
-      opacity: 0;
-      transition: opacity 0.5s ease-out;
-    }
-    .meme-card img {
-      width: 100%;
-      height: auto;
-      border-radius: 8px;
-    }
-    .meme-card h3 {
-      font-size: 1.1rem;
-      margin-top: 10px;
-    }
-    .meme-card p {
-      font-size: 0.9rem;
-      color: #555;
-    }
-    .buttons {
-      margin-top: 10px;
-    }
-    .buttons button {
-      margin-right: 10px;
-    }
-    form {
-      margin-top: 30px;
-    }
-    input, textarea {
-      width: 100%;
-      padding: 10px;
-      margin-bottom: 10px;
-    }
-    .search-bar {
-      margin-bottom: 20px;
-    }
-    .theme-toggle {
-      position: fixed;
-      top: 10px;
-      right: 10px;
-      background: #eee;
-      padding: 10px;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-    @media (max-width: 600px) {
-      .meme-card { font-size: 14px; }
-    }
-  </style>
+  <title>History.fy — Исторические факты</title>
+  
+  <!-- Подключаем внешний CSS файл -->
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville&display=swap" rel="stylesheet">
 </head>
 <body>
-  <div class="theme-toggle" onclick="toggleTheme()">🌙 / ☀️</div>
   <header>
     <h1>History.fy</h1>
-    <p>Исторические мемы с умом и юмором</p>
+    <p>Умные исторические факты с дозой юмора!</p>
   </header>
 
-  <div class="container">
-    <input class="search-bar" type="text" id="search" placeholder="🔍 Поиск мемов..." onkeyup="searchMemes()">
-    <button onclick="showRandomMeme()">🎲 Случайный мем</button>
-
-    <div class="meme-gallery" id="meme-gallery">
-      <!-- Генерация мемов -->
-      <div class="meme-card">
-        <img src="https://i.imgur.com/O7pzS5N.jpeg" alt="Meme 1">
-        <h3>Почему пирамиды были построены в Египте?</h3>
-        <p>Чтобы фараоны не скучали в загробной жизни...</p>
-      </div>
-      <!-- Повтори блок для остальных мемов -->
-      <!-- Пример следующих мемов -->
-      <div class="meme-card">
-        <img src="https://i.imgur.com/O7pzS5N.jpeg" alt="Meme 2">
-        <h3>Почему Римляне строили акведуки?</h3>
-        <p>Чтобы вода не унесла их цивилизацию...</p>
-      </div>
-      <!-- Добавь еще 28 карточек мемов аналогично -->
-
-    </div>
-
-    <form onsubmit="addMeme(event)">
-      <h2>➕ Добавить мем</h2>
-      <input type="text" id="meme-title" placeholder="Заголовок" required>
-      <textarea id="meme-text" placeholder="Текст мема" required></textarea>
-      <input type="text" id="meme-image" placeholder="Ссылка на изображение (необязательно)">
-      <input type="text" id="meme-tags" placeholder="Ключевые слова (через пробел)">
-      <button type="submit">Добавить</button>
-    </form>
+  <div class="search-container">
+    <input class="search-bar" type="text" id="search" placeholder="🔍 Найдите факт..." onkeyup="searchFacts()">
+    <button onclick="showRandomFact()">🎲 Случайный факт</button>
   </div>
 
-  <script>
-    function like(btn) {
-      let span = btn.querySelector('span');
-      span.textContent = parseInt(span.textContent) + 1;
-    }
+  <div class="container">
+    <!-- Карточки с фактами -->
+    <div class="fact-card" data-keywords="пирамида, египет">
+      <h2>Почему пирамиды строились в Египте, а не где-нибудь ещё?</h2>
+      <p>Египетские пирамиды — это не просто культовые сооружения, они олицетворяют концепцию вечности...</p>
+      <button class="like-btn" onclick="likeFact(this)">👍 <span class="like-count">0</span></button>
+    </div>
 
-    function share() {
-      alert("Скопируй ссылку из адресной строки и отправь друзьям! :)");
-    }
+    <div class="fact-card" data-keywords="рим, император">
+      <h2>Рим был "вечным городом", но почему императоры не подписывали контракт на аренду?</h2>
+      <p>Рим был знаменит тем, что «вечный» — это не просто эпитет...</p>
+      <button class="like-btn" onclick="likeFact(this)">👍 <span class="like-count">0</span></button>
+    </div>
 
-    function addComment(event, input) {
-      if (event.key === "Enter") {
-        const ul = input.nextElementSibling;
-        const li = document.createElement("li");
-        li.textContent = input.value;
-        ul.appendChild(li);
-        input.value = "";
-      }
-    }
+    <div class="fact-card" data-keywords="рыцари, средневековье">
+      <h2>Рыцари Средневековья: «Готов к браку? Или ты готов к бою?»</h2>
+      <p>Средневековье — это время, когда рыцари буквально «сливались» с оружием...</p>
+      <button class="like-btn" onclick="likeFact(this)">👍 <span class="like-count">0</span></button>
+    </div>
 
-    function addMeme(event) {
-      event.preventDefault();
-      const title = document.getElementById('meme-title').value;
-      const text = document.getElementById('meme-text').value;
-      const tags = document.getElementById('meme-tags').value;
-      const image = document.getElementById('meme-image').value;
+    <div class="fact-card" data-keywords="викинги, север">
+      <h2>Викинги: “Почему они не боялись дождя?”</h2>
+      <p>Викинги, возможно, не боялись дождя потому, что он был частью их «боевого климата»...</p>
+      <button class="like-btn" onclick="likeFact(this)">👍 <span class="like-count">0</span></button>
+    </div>
 
-      const div = document.createElement("div");
-      div.className = "meme-card";
-      div.setAttribute("data-keywords", tags.toLowerCase());
+    <div class="fact-card" data-keywords="революция, франция">
+      <h2>Французская революция: Как объяснить в 140 символах?</h2>
+      <p>Французская революция — это когда народ взял на себя ответственность за судьбу страны...</p>
+      <button class="like-btn" onclick="likeFact(this)">👍 <span class="like-count">0</span></button>
+    </div>
 
-      div.innerHTML = `
-        ${image ? `<img src="${image}" alt="Meme Image" class="meme-img">` : ''}
-        <h3>${title}</h3>
-        <p>${text}</p>
-        <div class="buttons">
-            <button onclick="like(this)">❤️ Лайк (<span>0</span>)</button>
-            <button onclick="share()">🔗 Поделиться</button>
-        </div>
-        <div class="comments">
-            <input type="text" placeholder="✍️ Комментарий" onkeydown="addComment(event, this)">
-            <ul></ul>
-        </div>
-      `;
-      document.getElementById('meme-gallery').appendChild(div);
-      event.target.reset();
-    }
+    <div class="fact-card" data-keywords="греция, философия">
+      <h2>Древнегреческие философы: что они на самом деле думали о жизни?</h2>
+      <p>Греки — это первые мыслители, которые начали искать ответы на вечные вопросы о жизни...</p>
+      <button class="like-btn" onclick="likeFact(this)">👍 <span class="like-count">0</span></button>
+    </div>
 
-    function searchMemes() {
-      const term = document.getElementById('search').value.toLowerCase();
-      const cards = document.querySelectorAll('.meme-card');
-      cards.forEach(card => {
-        const keywords = card.getAttribute('data-keywords');
-        card.style.display = keywords.includes(term) ? "block" : "none";
-      });
-    }
+    <div class="fact-card" data-keywords="античность, культура">
+      <h2>Как культура античного мира повлияла на Европу?</h2>
+      <p>Античный мир оказал огромное влияние на формирование европейской культуры...</p>
+      <button class="like-btn" onclick="likeFact(this)">👍 <span class="like-count">0</span></button>
+    </div>
 
-    function showRandomMeme() {
-      const cards = document.querySelectorAll('.meme-card');
-      cards.forEach(card => card.style.display = "none");
-      const random = cards[Math.floor(Math.random() * cards.length)];
-      random.style.display = "block";
-      random.scrollIntoView({ behavior: "smooth" });
-    }
+    <div class="fact-card" data-keywords="великая депрессия, экономика">
+      <h2>Как Великая депрессия повлияла на мировую экономику?</h2>
+      <p>Великая депрессия 1929 года не просто обрушила фондовые рынки...</p>
+      <button class="like-btn" onclick="likeFact(this)">👍 <span class="like-count">0</span></button>
+    </div>
 
-    function toggleTheme() {
-      document.body.classList.toggle("dark-theme");
-    }
+    <div class="fact-card" data-keywords="чеченская война, россия">
+      <h2>Чеченская война: Как она изменила Россию?</h2>
+      <p>Чеченская война начала 90-х годов оставила неизгладимый след в российской истории...</p>
+      <button class="like-btn" onclick="likeFact(this)">👍 <span class="like-count">0</span></button>
+    </div>
 
-    // Динамическая анимация появления карточек
-    window.addEventListener('load', () => {
-      const gallery = document.getElementById('meme-gallery');
-      setTimeout(() => {
-        gallery.style.opacity = '1';
-      }, 500);
+    <div class="fact-card" data-keywords="революция, россия">
+      <h2>Российская революция: Как она изменила Россию и мир?</h2>
+      <p>Революция 1917 года в России — одно из самых значимых событий в истории ХХ века...</p>
+      <button class="like-btn" onclick="likeFact(this)">👍 <span class="like-count">0</span></button>
+    </div>
 
-      const cards = document.querySelectorAll('.meme-card');
-      cards.forEach((card, index) => {
-        setTimeout(() => {
-          card.style.opacity = '1';
-        }, index * 100);
-      });
-    });
-  </script>
-</body>
-</html>
+    <div class="fact-card" data-keywords="компьютеры, история">
+      <h2>Как компьютеры изменили наше восприятие мира?</h2>
+      <p>От первых вычислительных машин до современных ПК — компьютеры кардинально изменили общество...</p>
+      <button class="like-btn" onclick="likeFact(this)">👍 <span class="like-count">0</span></button>
+    </div>
+
+    <div class="fact-card" data-keywords="первый мир, война">
+      <h2>Первая мировая война: Кто на самом деле начал войну?</h2>
+      <p>Многие считают, что Первая мировая война началась с убийства эрцгерцога Франца Фердинанда...</p>
+      <button class="like-btn" onclick="likeFact(this)">👍 <span class="like-count">0</span></button>
+    </div>
+
+    <div class="fact-card" data-keywords="вторая мировая, герои">
+      <h2>Какие герои Второй мировой войны стали настоящими легендами?</h2>
+      <p>От Чёрного барона до Роммеля — Вторую мировую войну можно описать множеством историй о героях...</p>
+      <button class="like-btn" onclick="likeFact(this)">👍 <span class="like-count">0</span></button>
+    </div>
+
+    <div class="fact-card" data-keywords="первый спутник, космос">
+      <h2>Как запуск первого спутника изменил мировую историю?</h2>
+      <p>Запуск спутника Земли стал первым шагом на пути человечества к освоению космоса...</p>
+      <button class="like-btn" onclick="likeFact(this)">👍 <span class="like-count">0</span></button>
+    </div>
+
+    <div class="fact-card" data-keywords="монастыри, средневековье">
+      <h2>Почему монастыри были важны в средневековье?</h2>
+      <p>Средневековые монастыри были центрами духовности и науки, их влияние нельзя недооценивать...</p>
+      <button class="like-btn" onclick="likeFact(this)">👍 <span class="like-count">0</span></button>
+    </div>
+
+    <div class="fact-card" data-keywords="испанская империя, колонизация">
+      <h2>Как испанская империя влияла на колонизацию Нового мира?</h2>
+      <p>Испания была одним из главных игроков в колонизации Америки...</p>
+      <button class="like-btn" onclick="likeFact(this)">👍 <span class="like-count">0</span></button>
+    </div>
+
+    <div class="fact-card" data-keywords="ренессанс, искусство">
+      <h2>Ренессанс: Как искусство изменило общество?</h2>
+      <p>Период Ренессанса стал эпохой культурных и художественных преобразований...</p>
+      <button class="like-btn" onclick="likeFact(this)">👍 <span class="like-count">0</span></button>
+    </div>
+
+    <div class="fact-card" data-keywords="кино, история">
+      <h2>Как кино стало важным культурным феноменом?</h2>
+      <p>С развитием кино индустрия приобрела громадное значение, влияя на массовую культуру...</p>
+      <button class="like-btn" onclick="likeFact(this)">👍 <span class="like-count">0</span></button>
+    </div>
+
+    <div class="fact-card" data-keywords="железная дорога, промышленность">
+      <h2>Как железная дорога повлияла на индустриализацию?</h2>
+      <p>Железные дороги стали важнейшей частью промышленной революции...</p>
+      <button class="like-btn" onclick="likeFact(this)">👍 <span class="like-count">0</span></button>
+    </div>
+
+    <div class="fact-card" data-keywords="модернизация, города">
+      <h2>Как модернизация повлияла на развитие городов?</h2>
+      <p>Модернизация городов в XIX и XX веках привела к значительным изменениям в урбанистике...</p>
+      <button class="like-btn" onclick="likeFact(this)">👍 <span class="like-count">0</span></button>
+    </div>
+
+    <div class="fact-card" data-keywords="революция, америка">
+      <h2>Как Американская революция изменила мир?</h2>
+      <p>Американская революция дала старт новым идеям демократии и правам человека...</p>
+      <button class="like-btn" onclick="likeFact(this)">👍 <span class="like-count">0</span></button>
+    </div>
+
+    <div class="fact-card" data-keywords="средневековье, города">
+      <h2>Как средневековые города развивались?</h2>
+      <p>Средневековые города были гораздо более хаотичными и компактными, чем современные мегаполисы...</p>
+      <button class="like-btn" onclick="likeFact(this)">👍 <span class="like-count">0</span></button>
+    </div>
+
+    <div class="fact-card" data-keywords="куклукс клан
