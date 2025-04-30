@@ -1,35 +1,29 @@
-// Функция поиска фактов по ключевым словам
+// Функция для поиска фактов
 function searchFacts() {
-  const searchTerm = document.getElementById('search').value.toLowerCase();
-  const cards = document.querySelectorAll('.fact-card');
+  let searchQuery = document.getElementById('search').value.toLowerCase();
+  let factCards = document.querySelectorAll('.fact-card');
 
-  cards.forEach(card => {
-    const keywords = card.getAttribute('data-keywords').toLowerCase();
-    if (keywords.includes(searchTerm)) {
-      card.style.display = 'block';
+  factCards.forEach(card => {
+    let cardText = card.innerText.toLowerCase();
+    if (cardText.includes(searchQuery)) {
+      card.style.display = "block";
     } else {
-      card.style.display = 'none';
+      card.style.display = "none";
     }
   });
 }
 
 // Функция для отображения случайного факта
 function showRandomFact() {
-  const facts = document.querySelectorAll('.fact-card');
-  const randomIndex = Math.floor(Math.random() * facts.length);
-  
-  facts.forEach((fact, index) => {
-    if (index === randomIndex) {
-      fact.style.display = 'block';
-    } else {
-      fact.style.display = 'none';
-    }
-  });
+  let factCards = document.querySelectorAll('.fact-card');
+  let randomIndex = Math.floor(Math.random() * factCards.length);
+  let randomCard = factCards[randomIndex];
+  randomCard.scrollIntoView({ behavior: 'smooth' });
 }
 
-// Функция для увеличения лайка
+// Функция для добавления лайков
 function likeFact(button) {
-  const likeCount = button.querySelector('.like-count');
-  let currentLikes = parseInt(likeCount.textContent);
-  likeCount.textContent = currentLikes + 1;
+  let likeCount = button.querySelector('.like-count');
+  let currentLikes = parseInt(likeCount.innerText);
+  likeCount.innerText = currentLikes + 1;
 }
