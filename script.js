@@ -1,24 +1,35 @@
-// Функция для переключения лайков
-function toggleLike(button) {
-  const likeCount = button.querySelector('.like-count');
-  let currentLikes = parseInt(likeCount.innerText);
-  likeCount.innerText = currentLikes + 1;
+// Функция поиска фактов по ключевым словам
+function searchFacts() {
+  const searchTerm = document.getElementById('search').value.toLowerCase();
+  const cards = document.querySelectorAll('.fact-card');
+
+  cards.forEach(card => {
+    const keywords = card.getAttribute('data-keywords').toLowerCase();
+    if (keywords.includes(searchTerm)) {
+      card.style.display = 'block';
+    } else {
+      card.style.display = 'none';
+    }
+  });
 }
 
-// Функция для анимации переворота карточек
-document.querySelectorAll('.card').forEach(card => {
-  card.addEventListener('click', () => {
-    card.classList.toggle('flipped');
-  });
-});
-
-// Функция для перемещения карточки по экрану (можно добавить дополнительные анимации)
-document.querySelectorAll('.flashcard').forEach(card => {
-  card.addEventListener('mouseover', () => {
-    card.style.transform = "scale(1.05)";
-  });
+// Функция для отображения случайного факта
+function showRandomFact() {
+  const facts = document.querySelectorAll('.fact-card');
+  const randomIndex = Math.floor(Math.random() * facts.length);
   
-  card.addEventListener('mouseout', () => {
-    card.style.transform = "scale(1)";
+  facts.forEach((fact, index) => {
+    if (index === randomIndex) {
+      fact.style.display = 'block';
+    } else {
+      fact.style.display = 'none';
+    }
   });
-});
+}
+
+// Функция для увеличения лайка
+function likeFact(button) {
+  const likeCount = button.querySelector('.like-count');
+  let currentLikes = parseInt(likeCount.textContent);
+  likeCount.textContent = currentLikes + 1;
+}
