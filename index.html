@@ -10,6 +10,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville&display=swap" rel="stylesheet">
 </head>
 <body>
+
   <header>
     <h1>History.fy</h1>
     <p>Умные исторические факты с дозой юмора!</p>
@@ -21,70 +22,28 @@
   </div>
 
   <div class="container">
-    <!-- Пример карточек с переворотом -->
+    <!-- Пример карточек -->
     <div class="fact-card" data-keywords="пирамида, египет">
       <div class="card-inner">
         <div class="card-front">
           <h2>Почему пирамиды строились в Египте?</h2>
-          <p>Египетские пирамиды — это не просто культовые сооружения, они олицетворяют концепцию вечности...</p>
+          <p>Египетские пирамиды — это не просто культовые сооружения...</p>
         </div>
         <div class="card-back">
-          <p>Древний Египет оставил нам пирамиды, которые до сих пор остаются великой тайной.</p>
+          <p>Текст обратной стороны карточки</p>
         </div>
       </div>
       <button class="like-btn" onclick="likeFact(this)">👍 <span class="like-count">0</span></button>
     </div>
 
-    <!-- Добавлены другие карточки с историческими фактами -->
-    <div class="fact-card" data-keywords="рим, император">
-      <div class="card-inner">
-        <div class="card-front">
-          <h2>Рим был "вечным городом", но почему императоры не подписывали контракт на аренду?</h2>
-          <p>Рим был знаменит тем, что «вечный» — это не просто эпитет...</p>
-        </div>
-        <div class="card-back">
-          <p>Императоры Рима не могли подписать контракт на аренду, потому что они уже владели городом...</p>
-        </div>
-      </div>
-      <button class="like-btn" onclick="likeFact(this)">👍 <span class="like-count">0</span></button>
-    </div>
-
-    <!-- Добавьте другие карточки здесь -->
-    <!-- Повторите блок с карточками для всех фактов -->
-
+    <!-- Добавьте дополнительные карточки по аналогии -->
   </div>
 
   <footer>
     <p>© 2025 History.fy — Все права защищены</p>
   </footer>
 
-  <script>
-    // Функция для лайков
-    function likeFact(button) {
-      let likeCount = button.querySelector('.like-count');
-      likeCount.textContent = parseInt(likeCount.textContent) + 1;
-    }
-
-    // Функция для поиска фактов
-    function searchFacts() {
-      let input = document.getElementById('search').value.toLowerCase();
-      let cards = document.querySelectorAll('.fact-card');
-      cards.forEach(function(card) {
-        let keywords = card.getAttribute('data-keywords');
-        if (keywords.toLowerCase().includes(input)) {
-          card.style.display = '';
-        } else {
-          card.style.display = 'none';
-        }
-      });
-    }
-
-    // Функция для случайного факта
-    function showRandomFact() {
-      let cards = document.querySelectorAll('.fact-card');
-      let randomCard = cards[Math.floor(Math.random() * cards.length)];
-      alert(randomCard.querySelector('.card-front h2').textContent);
-    }
-  </script>
+  <!-- Подключаем внешний скрипт -->
+  <script src="script.js"></script>
 </body>
 </html>
