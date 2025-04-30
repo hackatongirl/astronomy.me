@@ -6,22 +6,21 @@ function likeFact(button) {
 
 // Функция для поиска фактов
 function searchFacts() {
-  let input = document.getElementById('search').value.toLowerCase();  // Получаем введённый текст
-  let cards = document.querySelectorAll('.fact-card');  // Получаем все карточки
-
+  let input = document.getElementById('search').value.toLowerCase();
+  let cards = document.querySelectorAll('.fact-card');
   cards.forEach(function(card) {
-    let keywords = card.getAttribute('data-keywords');  // Получаем ключевые слова для каждой карточки
+    let keywords = card.getAttribute('data-keywords');
     if (keywords.toLowerCase().includes(input)) {
-      card.style.display = '';  // Если ключевое слово содержит введённый текст, показываем карточку
+      card.style.display = '';
     } else {
-      card.style.display = 'none';  // Если нет, скрываем карточку
+      card.style.display = 'none';
     }
   });
 }
 
 // Функция для случайного факта
 function showRandomFact() {
-  let cards = document.querySelectorAll('.fact-card');  // Получаем все карточки
-  let randomCard = cards[Math.floor(Math.random() * cards.length)];  // Выбираем случайную карточку
-  alert(randomCard.querySelector('.card-front h2').textContent);  // Показываем название факта
+  let cards = document.querySelectorAll('.fact-card');
+  let randomCard = cards[Math.floor(Math.random() * cards.length)];
+  alert(randomCard.querySelector('.card-front h2').textContent);
 }
